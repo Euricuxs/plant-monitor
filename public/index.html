@@ -35,9 +35,9 @@
                 // const {datetime} = data;
 
                 document.getElementById('date').textContent =  data.datetime.substr(0,10);
-                document.getElementById('time').textContent = data.datetime.substr(11,08);
+                document.getElementById('time').textContent = data.datetime.substr(11,8);
 
-                setInterval(getData,1000);
+                setTimeout(getData,1000);
             }
             getData();
 
