@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" style="background-image: url('image/3848789.jpg'); background-repeat: no-repeat; background-size: cover">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Fetch JSON from API</title>
+</head>
+<body>
+<div style="text-align: center">
+    <h1 style="font-size: 50px; font-weight: bold">Project Plantonia</h1>
+
+    <p style="font-size: 30px; font-weight: bold;">
+        Temperature : <span id="cekSuhu"></span><br>
+        Soil moisture : <span id="cekKelembapan"></span>
+    </p>
+
+    <p style="font-size: 30px; font-weight: bold;">
+        <span id="alertSuhu"></span><br>
+        <span id="alertKelembapan"></span>
+    </p>
+    </div>
+
+    <script>
+        const api_url = 'http://worldtimeapi.org/api/ip';
+        async function getData() {
+            const response = await fetch(api_url);
+            const data = await response.json();
+
+            document.getElementById('lat').textContent = data.datetime.substring(11,19);
+            document.getElementById('long').textContent = data.timezone;
+
+            setInterval(getData,700);
+        }
+        getData();
+    </script>
+</body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.15.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.15.0/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
+<!-- <script>
+        var cekSuhu = document.getElementById('cekSuhu');
+        var cekKelembapan = document.getElementById('cekKelembapan');
+        var warningSuhu = document.getElementById('alertSuhu');
+        var warningKelembapan = document.getElementById('alertKelembapan');
+        if(Number(cekKelembapan) < 30)
+        {
+            document.getElementById('alertSuhu').textContent = "Soil moisture below 30%. Please water your plant.";
+        }
+        else if(Number())
+        if(Number(cekSuhu) < 15.6)
+        {
+            document.getElementById('alertSuhu').textContent = "Temperature below 15,6°C. Please move your plant to somewhere warmer.";
+        }
+    </script> -->
+</html>
