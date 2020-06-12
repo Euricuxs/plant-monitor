@@ -3,60 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title>Fetch JSON from API</title>
+    <title>Project Plantonia</title>
 </head>
 <body>
-<div style="text-align: center">
-    <h1 style="font-size: 50px; font-weight: bold">Project Plantonia</h1>
+    <div id="kotak" style="text-align: center">
+        <h1 style="font-size: 50px; font-weight: bold">Project Plantonia</h1>
 
-    <p style="font-size: 30px; font-weight: bold;">
-        Temperature : <span id="cekSuhu"></span><br>
-        Soil moisture : <span id="cekKelembapan"></span>
-    </p>
+        <p style="font-size: 20px; font-weight: bold; text-align: center;">
+            Date : <span id="date"></span><br>
+            Time : <span id="time"></span><br>
+        </p>
 
-    <p style="font-size: 30px; font-weight: bold;">
-        <span id="alertSuhu"></span><br>
-        <span id="alertKelembapan"></span>
-    </p>
-    </div>
+        <p style="font-size: 25px; font-weight: bold;">          
+            Temperature : <span id="cekSuhu"></span><br>
+            Soil moisture : <span id="cekKelembapan"></span><br>
+            Light Intensity : <span id="cekCahaya"></span>
+        </p>
 
-    <script>
-        const api_url = 'http://worldtimeapi.org/api/ip';
-        async function getData() {
-            const response = await fetch(api_url);
-            const data = await response.json();
+        <p style="font-size: 25px; font-weight: bold; ">
+            <span id="alertSuhu"></span><br>
+            <span id="alertKelembapan"></span>
+            <span id="alertCahaya"></span>
+        </p>
+        </div>
 
-            document.getElementById('lat').textContent = data.datetime.substring(11,19);
-            document.getElementById('long').textContent = data.timezone;
+        <script>
+            const api_url = 'http://worldtimeapi.org/api/ip';
+            async function getData() {
+                const response = await fetch(api_url);
+                const data = await response.json();
 
-            setInterval(getData,700);
-        }
-        getData();
-    </script>
-</body>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/7.15.0/firebase-app.js"></script>
+                document.getElementById('date').textContent =  data.datetime.substr(0,10);
+                document.getElementById('time').textContent = data.datetime.substr(11,08);
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-   https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/7.15.0/firebase-analytics.js"></script>
+                setInterval(getData,1000);
+            }
+            getData();
 
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
+            // function updateClock() 
+            // {
+            //     var now = new Date(),
+            //     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September'
+            //     , 'October', 'November', 'December'];
+            //     time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
 
-<!-- <script>
-        var cekSuhu = document.getElementById('cekSuhu');
-        var cekKelembapan = document.getElementById('cekKelembapan');
-        var warningSuhu = document.getElementById('alertSuhu');
-        var warningKelembapan = document.getElementById('alertKelembapan');
-        if(Number(cekKelembapan) < 30)
-        {
-            document.getElementById('alertSuhu').textContent = "Soil moisture below 30%. Please water your plant.";
-        }
-        else if(Number())
-        if(Number(cekSuhu) < 15.6)
-        {
-            document.getElementById('alertSuhu').textContent = "Temperature below 15,6°C. Please move your plant to somewhere warmer.";
-        }
-    </script> -->
+            //         date = [now.getDate(), 
+            //                 months[now.getMonth()],
+            //                 now.getFullYear()].join(' ');
+
+            // document.getElementById('date').innerHTML = [date, time].join(' / ');
+            //     setTimeout(updateClock, 1000);
+            // }
+            // updateClock();
+        </script>
+
+
+        <script>
+            var cekTemp = document.getElementById('cekSuhu');
+            var cekMoist = document.getElementById('cekKelembapan');
+            var cekLight = document.getElementById('cekCahaya');
+            var warningSuhu = document.getElementById('alertSuhu');
+            var warningKelembapan = document.getElementById('alertKelembapan');
+            var warningCahaya = document.getElementById('alertKelembapan');
+
+            if(Number(cekMoist) < 30)
+            {
+                document.getElementById('alertKelembapan').textContent = "Soil moisture below 30%. Please water your plant.";
+            }
+            else if(Number(cekMoist) > 70)
+            {
+                document.getElementById('alertKelembapan').textContent = "Soil moisture above 70%. Please leave your plant to dry.";
+            }
+                
+            if(Number(cekTemp) < 15.6)
+            {
+                document.getElementById('alertSuhu').textContent = "Temperature below 15,6°C. Please move your plant to somewhere warmer.";
+            }
+            else if(Number(cekTemp) > 26.7)
+            {
+                document.getElementById('alertSuhu').textContent = "Temperature above 26,7°C. Please move your plant to somewhere cooler.";
+            }
+
+            if(Number(cekLight) < 20)
+            {
+                document.getElementById('alertCahaya').textContent = "Light Intensity below 20%. Please move your plant to somewhere lighter.";
+            }
+            else if(Number(cekLight) > 70)
+            {
+                document.getElementById('alertCahaya').textContent = "Light intensity above 70%. Please move your plant to somewhere less lighter.";
+            }
+
+
+        </script>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/7.15.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="/__/firebase/7.15.0/firebase-analytics.js"></script>
+        
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+    </body>
+
 </html>
